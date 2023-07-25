@@ -1,0 +1,14 @@
+# define default database user, name, and configure Postgres to fetch the password from the secret
+auth:
+  enablePostgresUser: true
+  existingSecret: "postgres" 
+  database: "app_db"
+
+# The postgres helm chart deployment will be using PVC postgres-data
+primary:
+  persistence:
+    enabled: true
+    existingClaim: "postgres-data"
+  existingExtendedConfigmap: "postgres-configmap"
+  nodeSelector:
+    db: "yes"

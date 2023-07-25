@@ -1,0 +1,23 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+    name: postgres-dev
+provisioner: vlz
+volumeBindingMode: Immediate
+parameters:
+  Policy: postgres-dev
+  VolumeType: file
+  Zone: eastus-1
+allowVolumeExpansion: true
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: postgres-data
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1000Gi
+  storageClassName: postgres-dev
